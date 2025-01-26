@@ -1,9 +1,30 @@
 {
+  "name": "shopeasy",
+  "version": "1.0.0",
+  "description": "ShopEasy 是一個專注於提供用戶快速、便利購物體驗的線上電商平台，透過簡單直觀的操作界面、多元化的商品選擇以及快速的物流配送，為用戶帶來無縫的購物體驗。",
+  "main": "index.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hsu-Pei-Chun/ShopEasy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hsu-Pei-Chun/ShopEasy/issues"
+  },
+  "homepage": "https://github.com/Hsu-Pei-Chun/ShopEasy#readme",
   "dependencies": {
-    "@vue/compiler-sfc": "^3.5.13",
-    "esbuild": "^0.24.2",
-    "esbuild-plugin-vue3": "^0.4.2",
-    "vue": "^3.5.13",
-    "vue-router": "^4.0.13"
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^4.5.0"
   }
 }
