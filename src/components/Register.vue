@@ -16,19 +16,27 @@
 </template>
 
 <script>
+import api from '../services/api';
+
 export default {
   data() {
     return {
       email: '',
       password: ''
-    }
+    };
   },
   methods: {
-    register() {
-      // 處理註冊邏輯
-      console.log('Email:', this.email)
-      console.log('Password:', this.password)
+    async register() {
+      try {
+        const response = await api.post('/users/', {
+          email: this.email,
+          password: this.password
+        });
+        console.log('Registration successful:', response.data);
+      } catch (error) {
+        console.error('Registration failed:', error);
+      }
     }
   }
-}
+};
 </script>

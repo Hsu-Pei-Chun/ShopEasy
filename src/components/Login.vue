@@ -16,19 +16,28 @@
 </template>
 
 <script>
+import { api } from '@/services/api';
+
 export default {
   data() {
     return {
       email: '',
-      password: ''
-    }
+      password: '',
+    };
   },
   methods: {
-    login() {
-      // 處理登入邏輯
-      console.log('Email:', this.email)
-      console.log('Password:', this.password)
-    }
-  }
-}
+    async login() {
+      try {
+        const response = await api.post('/login', {
+          email: this.email,
+          password: this.password,
+        });
+        localStorage.setItem('token', response.data.token);
+        this.$router.push('/');
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
+    },
+  },
+};
 </script>

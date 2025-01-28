@@ -35,3 +35,8 @@ exec('http-server dist', (err, stdout, stderr) => {
   console.log(stdout);
   console.error(stderr);
 });
+:wq!
+exit
+exit()
+
+

@@ -28,6 +28,7 @@ chokidar.watch('src/**/*').on('change', (path) => {
 
 // 啟動開發伺服器
 exec('http-server dist', (err, stdout, stderr) => {
+
   if (err) {
     console.error(`Error starting server: ${err}`);
     return;
@@ -35,3 +36,12 @@ exec('http-server dist', (err, stdout, stderr) => {
   console.log(stdout);
   console.error(stderr);
 });
+
+exit
+exit()
+^X
+
+
+
+
+
