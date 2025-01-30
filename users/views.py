@@ -1,10 +1,50 @@
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+import mimetypes
+import boto3
+from django.conf import settings
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
+from .models import UserProfile
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def upload_avatar(request):
+    user = request.user
+    profile, created = UserProfile.objects.get_or_create(user=user)
+
+    # 確保檔案上傳
+    avatar = request.FILES.get("avatar")
+    if not avatar:
+        return Response({"error": "請上傳圖片"}, status=status.HTTP_400_BAD_REQUEST)
+
+    # 嘗試判斷圖片類型並設定
+    content_type, _ = mimetypes.guess_type(avatar.name)
+
+    # 使用 boto3 上傳到 S3
+    s3 = boto3.client("s3")
+
+    try:
+        s3.upload_fileobj(
+            Fileobj=avatar,
+            Bucket="shopeasy",  
+            Key=f"avatars/{avatar.name}",  # 存儲在 S3 的路徑和文件名
+            ExtraArgs={"ContentType": content_type},  # 設置 Content-Type
+        )
+
+        # 儲存圖片的 URL（假設您已配置好 S3 的 URL）
+        avatar_url = f"https://{settings.AWS_S3_CUSTOM_DOMAIN}/avatars/{avatar.name}"
+
+        return Response(
+            {"message": "大頭貼上傳成功！", "avatar_url": avatar_url},
+            status=status.HTTP_200_OK,
+        )
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
